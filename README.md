@@ -27,9 +27,6 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 
 **Gradle:** currently, I update the gradle to latest version for further implementation
 
-This pattern was heavily inspired from https://github.com/KevinnZou/compose-webview-multiplatform for his awesome pattern.
-
-
 ## Features
 
 - This project mainly focused on building web view for multiplatform. Why? Because currently, I've develop some mobile app using React Native. So, I need the shell for my app.
