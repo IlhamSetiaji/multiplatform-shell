@@ -17,6 +17,10 @@ class AndroidWebView(
 ) : WebViewInterface {
     init {
         initWebView()
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true // Enable DOM storage
+        }
     }
 
     override fun canGoBack() = webView.canGoBack()

@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.filter
 
 @Composable
 internal fun BasicWebViewSample(navHostController: NavHostController? = null) {
-    val initialUrl = "https://github.com/IlhamSetiaji"
+    val initialUrl = "https://julong-dev.avolut.com/"
     val state = rememberWebViewState(url = initialUrl)
     DisposableEffect(Unit) {
         state.webSettings.apply {
