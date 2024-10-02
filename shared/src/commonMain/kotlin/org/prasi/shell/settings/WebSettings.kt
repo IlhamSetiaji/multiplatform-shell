@@ -8,6 +8,8 @@ class WebSettings {
 
     var isJavaScriptEnabled = true
 
+    var isDomStorageEnabled = true
+
     var customUserAgentString: String? = null
 
     var zoomLevel: Double = 1.0

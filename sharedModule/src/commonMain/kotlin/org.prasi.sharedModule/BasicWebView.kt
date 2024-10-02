@@ -42,6 +42,7 @@ internal fun BasicWebViewSample(navHostController: NavHostController? = null) {
     var textFieldValue by remember(state.lastLoadedUrl) {
         mutableStateOf(state.lastLoadedUrl)
     }
+
     val webViewBridge = rememberWebViewJsBridge(navigator)
 
     webViewBridge.register(GreetMessageHandler())
@@ -53,6 +54,7 @@ internal fun BasicWebViewSample(navHostController: NavHostController? = null) {
                 Modifier
                     .fillMaxSize(),
                 navigator = navigator,
+                webViewBridge = webViewBridge,
             )
         }
     }

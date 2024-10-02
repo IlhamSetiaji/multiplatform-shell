@@ -123,6 +123,7 @@ fun AccompanistWebView(
                 settings.apply {
                     state.webSettings.let {
                         javaScriptEnabled = it.isJavaScriptEnabled
+                        domStorageEnabled = it.isDomStorageEnabled
                         userAgentString = it.customUserAgentString
                         allowFileAccessFromFileURLs = it.allowFileAccessFromFileURLs
                         allowUniversalAccessFromFileURLs = it.allowUniversalAccessFromFileURLs
