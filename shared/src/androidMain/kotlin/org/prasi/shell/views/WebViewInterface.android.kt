@@ -21,6 +21,7 @@ class AndroidWebView(
             javaScriptEnabled = true
             domStorageEnabled = true // Enable DOM storage
         }
+        initJsBridge(webViewBridge!!)
     }
 
     override fun canGoBack() = webView.canGoBack()

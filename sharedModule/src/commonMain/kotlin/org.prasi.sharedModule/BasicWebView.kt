@@ -22,6 +22,8 @@ import org.prasi.shell.views.WebViewState
 import org.prasi.shell.views.rememberWebViewNavigator
 import org.prasi.shell.views.rememberWebViewState
 import kotlinx.coroutines.flow.filter
+import org.prasi.sharedModule.bridges.GreetMessageHandler
+import org.prasi.shell.bridges.rememberWebViewJsBridge
 
 @Composable
 internal fun BasicWebViewSample(navHostController: NavHostController? = null) {
@@ -40,6 +42,9 @@ internal fun BasicWebViewSample(navHostController: NavHostController? = null) {
     var textFieldValue by remember(state.lastLoadedUrl) {
         mutableStateOf(state.lastLoadedUrl)
     }
+    val webViewBridge = rememberWebViewJsBridge(navigator)
+
+    webViewBridge.register(GreetMessageHandler())
     MaterialTheme {
         Column {
             WebView(
