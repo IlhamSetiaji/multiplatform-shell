@@ -23,12 +23,12 @@ import org.prasi.shell.views.WebView
 import org.prasi.shell.views.rememberWebViewState
 
 @Composable
-internal fun WebViewApp() {
-    NavigationSetup("basic");
+internal fun WebViewApp(activity: Any) {
+    NavigationSetup("basic", activity);
 }
 
 @Composable
-fun NavigationSetup(name: String) {
+fun NavigationSetup(name: String, activity: Any) {
     val controller = rememberNavController()
     NavHost(
         navController = controller,
@@ -44,7 +44,7 @@ fun NavigationSetup(name: String) {
             MainScreen(controller)
         }
         composable("basic") {
-            BasicWebViewSample(controller)
+            BasicWebViewSample(controller, activity)
         }
         composable("html") {
             BasicWebViewWithHTMLSample(controller)

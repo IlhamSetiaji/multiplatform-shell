@@ -46,6 +46,7 @@ kotlin {
                 implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
                 implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
                 api(project(":shared"))
+                implementation("androidx.core:core-ktx:1.7.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
                 implementation("org.jetbrains.kotlinx:atomicfu:0.23.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
@@ -56,6 +57,9 @@ kotlin {
             dependencies {
                 api("androidx.activity:activity-compose:1.8.2")
                 api("androidx.appcompat:appcompat:1.6.1")
+                api(project(":shared"))
+                implementation("androidx.core:core-ktx:1.7.0")
+                api("androidx.core:core-ktx:1.7.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
             }
         }

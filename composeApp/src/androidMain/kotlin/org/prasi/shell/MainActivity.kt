@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContent {
-            MainWebView()
+            MainWebView(activity = this)
         }
     }
 }
