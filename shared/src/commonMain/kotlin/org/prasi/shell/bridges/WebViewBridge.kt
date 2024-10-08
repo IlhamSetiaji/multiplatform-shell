@@ -9,6 +9,7 @@ import org.prasi.shell.views.WebViewNavigator
 @Immutable
 open class WebViewBridge(val navigator: WebViewNavigator? = null, val jsBridgeName: String = "kmpJsBridge") {
     private val messageBridgeDispatcher = MessageBridgeDispatcher()
+    private var callbackId: Int? = null
     var webView: WebViewInterface? = null
 
     fun register(handler: MessageHandlerInterface) {
@@ -25,8 +26,13 @@ open class WebViewBridge(val navigator: WebViewNavigator? = null, val jsBridgeNa
 
     fun dispatch(message: MessageBridge) {
         messageBridgeDispatcher.dispatch(message, navigator) {
+            callbackId = message.callbackId
             onCallback(it, message.callbackId)
         }
+    }
+
+    fun extractCallbackIdFromData(): Int? {
+        return callbackId
     }
 
     private fun onCallback(

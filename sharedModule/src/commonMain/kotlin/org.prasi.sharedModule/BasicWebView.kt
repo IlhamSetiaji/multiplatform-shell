@@ -24,11 +24,14 @@ import org.prasi.shell.views.rememberWebViewState
 import kotlinx.coroutines.flow.filter
 import org.prasi.sharedModule.bridges.GreetMessageHandler
 import org.prasi.sharedModule.bridges.OpenCameraHandler
+import org.prasi.sharedModule.bridges.OpenFilePickerHandler
+import org.prasi.sharedModule.bridges.SharedPreferrencesBridge
 import org.prasi.shell.bridges.rememberWebViewJsBridge
 
 @Composable
 internal fun BasicWebViewSample(navHostController: NavHostController? = null, activity: Any) {
-    val initialUrl = "https://wareify.avolut.com/"
+    val initialUrl = "https://eam.avolut.com"
+//    val initialUrl = "https://wareify.avolut.com/"
     val state = rememberWebViewState(url = initialUrl)
     DisposableEffect(Unit) {
         state.webSettings.apply {
@@ -48,6 +51,8 @@ internal fun BasicWebViewSample(navHostController: NavHostController? = null, ac
 
     webViewBridge.register(GreetMessageHandler())
     webViewBridge.register(OpenCameraHandler(activity))
+    webViewBridge.register(SharedPreferrencesBridge(activity))
+    webViewBridge.register(OpenFilePickerHandler(activity))
     MaterialTheme {
         Column {
             WebView(

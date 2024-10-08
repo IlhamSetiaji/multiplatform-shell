@@ -73,6 +73,7 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
         implementation("com.google.android.material:material:1.9.0")
+        implementation("org.nanohttpd:nanohttpd:2.3.1")
     }
 }
 

@@ -1,9 +1,12 @@
-// sharedModule/src/androidMain/kotlin/org/prasi/sharedModule/bridges/OpenCameraHandler.kt
 package org.prasi.sharedModule.bridges
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.util.Base64
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
 import org.prasi.sharedModule.eventbus.FlowEventBus
@@ -11,8 +14,12 @@ import org.prasi.sharedModule.eventbus.NavigationEvent
 import org.prasi.shell.bridges.MessageBridge
 import org.prasi.shell.bridges.MessageHandlerInterface
 import org.prasi.shell.views.WebViewNavigator
+import java.io.ByteArrayOutputStream
 
 actual class OpenCameraHandler actual constructor(private val activity: Any) : MessageHandlerInterface {
+
+    private var callback: ((String) -> Unit)? = null
+
     override fun methodName(): String {
         return "OpenCamera"
     }
@@ -27,10 +34,37 @@ actual class OpenCameraHandler actual constructor(private val activity: Any) : M
         }
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         (activity as Activity).startActivityForResult(intent, REQUEST_CAMERA)
-        callback("Camera opened")
-        navigator?.coroutineScope?.launch {
-            FlowEventBus.publishEvent(NavigationEvent())
+        this.callback = callback
+    }
+
+    fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as? Bitmap
+            imageBitmap?.let {
+                val base64Image = encodeImageToBase64(it)
+                saveImageToLocalStorage(base64Image)
+                callback?.invoke(base64Image)
+            }
         }
+    }
+
+    private fun encodeImageToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+
+    private fun saveImageToLocalStorage(base64Image: String) {
+        val sharedPreferences: SharedPreferences = (activity as Activity).getSharedPreferences("local_storage", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("base64Image", base64Image)
+        editor.apply()
+    }
+
+    fun getImageFromLocalStorage(): String? {
+        val sharedPreferences: SharedPreferences = (activity as Activity).getSharedPreferences("local_storage", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("base64Image", null)
     }
 
     companion object {
